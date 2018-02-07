@@ -1,0 +1,241 @@
+swagger: "2.0"
+
+info:
+  description: "Api gerenciar consultas médicas de um consultorio."
+  version: "1.0.0"
+  title: "Gestão de Consultas Médicas"
+  termsOfService: "http://www.carledwinj.wordpress.com/terms"
+  contact:
+    email: "carlinstr@gmail.com"
+  license:
+    name: "Carl Edwin TI 1.0"
+    url: "http://carledwinj.wordpress.com/licenses/LICENSE-1.0.html"
+
+host: "gestao-consulta-medica-api"
+
+basePath: "/v1"
+
+tags:
+- name: "Consulta"
+  description: ""
+- name: "Agenda"
+  description: ""  
+
+schemes:
+- "http"
+
+paths:
+  "/consulta":
+    post:
+      tags:
+      - "Consulta"
+      summary: "Cadastra nova consulta"
+      description: ""
+      operationId: "cadastro"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Informacoes sobre a consulta"
+        required: true
+        schema:
+          $ref: "#/definitions/Consulta"
+      responses:
+        201:
+          description: "Created"
+          schema: 
+            $ref: "#/definitions/Consulta"
+        404:
+          description: "Not Found"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        405:
+          description: "Error operation"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        
+    put:
+      tags:
+      - "Consulta"
+      summary: "Altera consulta existente"
+      description: ""
+      operationId: "update"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Informacoes sobre a consulta para efeturar a alteracao"
+        required: true
+        schema:
+          $ref: "#/definitions/Consulta"
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/Consulta"
+        404:
+          description: "Not Found"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        405:
+          description: "Error operation"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+    
+  "/consulta/{codigo}":
+    get:
+      tags:
+      - "Consulta"
+      summary: "Resgata consulta pelo codigo"
+      description: ."
+      operationId: "consultaPorCodigo"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "codigo"
+        in: "path"
+        description: "Codigo da consulta para busca"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Consulta"
+        404:
+          description: "Not Found"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        405:
+          description: "Error operation"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+      
+    delete:
+      tags:
+      - "Consulta"
+      summary: "Excluir consulta agendada"
+      description: ""
+      operationId: "delete"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "codigo"
+        in: "path"
+        description: "Codigo da consulta para exclusao"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        404:
+          description: "Not Found"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        405:
+          description: "Error operation"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+  
+  "/consultas":
+    get:
+      tags:
+      - "Agenda"
+      summary: "Resgata consultas por status"
+      description: ""
+      operationId: "consulta"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "status"
+        in: "query"
+        description: "Status da consulta realizar o filtro"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Consulta"
+        400:
+          description: "Invalid status of query"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        404:
+          description: "Not Found"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+  
+definitions:
+  
+  Consulta:
+    type: "object"
+    required:
+    - "paciente"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      datahora:
+        type: "string"
+        format: "date-time"
+        example: "2017-07-21T17:32:28Z"
+      categoria:
+        type: "string"
+        enum:
+          - "convenio"
+          - "particular"
+      paciente:
+        $ref: "#/definitions/Paciente"
+      status:
+        type: "string"
+        enum:
+        - "cancelada"
+        - "agendada"
+        - "realizada"
+  
+  Paciente:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      nome:
+        type: "string"
+      sobrenome: 
+        type: "string"
+      telefone:
+        $ref: "#/definitions/Telefone"
+  
+  Telefone:
+    type: "object"
+    properties:
+      ddd:
+        type: "integer"
+        format: "int32"
+      numero:
+        type: "integer"
+        format: "int32"
+  
+  ApiResponse:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+        format: "int32"
+      type:
+        type: "string"
+      message:
+        type: "string"
