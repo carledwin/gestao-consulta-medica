@@ -2,7 +2,6 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.wordpress.gestaoconsultamedica</groupId>
     <artifactId>gestao-consulta-medica</artifactId>
-    <packaging>war</packaging>
     <name>gestao-consulta-medica</name>
     <version>1.0.0</version>
     <properties>
