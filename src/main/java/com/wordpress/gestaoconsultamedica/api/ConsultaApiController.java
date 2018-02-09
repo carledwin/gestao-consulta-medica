@@ -9,10 +9,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.wordpress.gestaoconsultamedica.api.entity.ConsultaEntity;
+import com.wordpress.gestaoconsultamedica.api.entity.ConvenioEntity;
 import com.wordpress.gestaoconsultamedica.api.entity.PacienteEntity;
 import com.wordpress.gestaoconsultamedica.model.Consulta;
 import com.wordpress.gestaoconsultamedica.model.ModelApiResponse;
 import com.wordpress.gestaoconsultamedica.model.Paciente;
+import com.wordpress.gestaoconsultamedica.repository.ConsultaRepository;
+import com.wordpress.gestaoconsultamedica.repository.ConvenioRepository;
 import com.wordpress.gestaoconsultamedica.repository.PacienteRepository;
 
 import io.swagger.annotations.ApiParam;
@@ -23,9 +27,31 @@ public class ConsultaApiController implements ConsultaApi {
 
 	@Autowired
 	private PacienteRepository pacienteRepository;
-
+	
+	@Autowired
+	private ConvenioRepository convenioRepository;
+	
+	@Autowired
+	private ConsultaRepository consultaRepository;
+	
+	
     public ResponseEntity<Consulta> cadastro(@ApiParam(value = "Informacoes sobre a consulta" ,required=true )  @Valid @RequestBody Consulta body) {
-        // do some magic!
+        
+    	if(body != null && body.getPaciente() != null) {
+    		ConsultaEntity consultaEntity = new ConsultaEntity();
+    		
+    		PacienteEntity pacienteEntity = new PacienteEntity();
+    		//body.getCategoria().ordinal()
+    		ConvenioEntity convenioEntity = convenioRepository.findOne(1l);
+    		
+    		if(convenioEntity != null) {
+    			pacienteEntity.setConvenio(convenioEntity);
+    			consultaEntity.setPaciente(pacienteEntity);
+    		}
+    		
+			consultaRepository.save(consultaEntity);
+    	}
+    	
         return new ResponseEntity<Consulta>(HttpStatus.OK);
     }
 

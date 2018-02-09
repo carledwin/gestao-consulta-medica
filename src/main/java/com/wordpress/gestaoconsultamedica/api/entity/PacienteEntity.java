@@ -24,6 +24,9 @@ public class PacienteEntity {
 	@OneToMany(mappedBy="paciente")
 	private List<TelefoneEntity> telefones;
 
+	@OneToMany(mappedBy="paciente")
+	private List<ConsultaEntity> consultas;
+	
 	public Long getId() {
 		return id;
 	}
@@ -41,5 +44,11 @@ public class PacienteEntity {
 	}
 	public void setTelefones(List<TelefoneEntity> telefones) {
 		this.telefones = telefones;
+	}
+	public List<ConsultaEntity> getConsultas() {
+		return consultas;
+	}
+	public void setConsultas(List<ConsultaEntity> consultas) {
+		this.consultas = consultas;
 	}
 }

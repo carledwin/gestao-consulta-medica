@@ -1,0 +1,39 @@
+post
+{
+  "id": 0,
+  "datahora": "2017-07-21T17:32:28Z",
+  "categoria": "convenio",
+  "paciente": {
+    "id": 0,
+    "nome": "string",
+    "sobrenome": "string",
+    "telefone": {
+      "ddd": 0,
+      "numero": 0
+    }
+  },
+  "status": "cancelada"
+}
+
+put
+{
+  "id": 0,
+  "datahora": "2017-07-21T17:32:28Z",
+  "categoria": "convenio",
+  "paciente": {
+    "id": 0,
+    "nome": "string",
+    "sobrenome": "string",
+    "telefone": {
+      "ddd": 0,
+      "numero": 0
+    }
+  },
+  "status": "cancelada"
+}
+
+curl -X POST "http://gestao-consulta-medica-api/v1/consulta" -H "accept: application/json" -H "Content-Type: application/json" -d "{ \"id\": 0, \"datahora\": \"2017-07-21T17:32:28Z\", \"categoria\": \"convenio\", \"paciente\": { \"id\": 0, \"nome\": \"string\", \"sobrenome\": \"string\", \"telefone\": { \"ddd\": 0, \"numero\": 0 } }, \"status\": \"cancelada\"}"
+curl -X PUT "http://gestao-consulta-medica-api/v1/consulta" -H "accept: application/json" -H "Content-Type: application/json" -d "{ \"id\": 0, \"datahora\": \"2017-07-21T17:32:28Z\", \"categoria\": \"convenio\", \"paciente\": { \"id\": 0, \"nome\": \"string\", \"sobrenome\": \"string\", \"telefone\": { \"ddd\": 0, \"numero\": 0 } }, \"status\": \"cancelada\"}"
+curl -X GET "http://gestao-consulta-medica-api/v1/consulta/323" -H "accept: application/json"
+curl -X DELETE "http://gestao-consulta-medica-api/v1/consulta/12" -H "accept: application/json"
+curl -X GET "http://gestao-consulta-medica-api/v1/consultas?status=agendada" -H "accept: application/json"
